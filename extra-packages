@@ -3,10 +3,10 @@ atuin
 btop
 bat
 chezmoi
-clipboard
 cosign
 dbus-x11
 direnv
+lsd
 eza
 ffmpeg
 fzf
@@ -21,7 +21,6 @@ neofetch
 neovim
 npm
 plocate
-python3
 ripgrep
 speedtest-cli
 starship

@@ -28,7 +28,7 @@ RUN pacman-key --init && \
 COPY extra-packages /
 USER build
 
-RUN grep -v '^#' /extra-packages | xargs paru -Syu --noconfirm
+RUN paru -Syu --noconfirm $(cat /extra-packages | tr '\n' ' ')
 USER root
 
 RUN rm /extra-packages
