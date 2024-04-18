@@ -33,7 +33,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           install: true
-          driver: docker
+          version: latest
 
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
