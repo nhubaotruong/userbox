@@ -19,11 +19,14 @@ RUN sed -i 's/#Color/Color/g' /etc/pacman.conf && \
       echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
       echo "root ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-USER build
 COPY extra-packages /
-RUN apk update && \
-      apk upgrade && \
-      grep -v '^#' /extra-packages | xargs apk add
+USER build
+
+# RUN apk update && \
+#       apk upgrade && \
+#       grep -v '^#' /extra-packages | xargs apk add
+USER root
+
 RUN rm /extra-packages
 
 RUN ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
@@ -34,7 +37,6 @@ RUN ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/transactional-update
 
-USER root
 # Cleanup
 RUN sed -i 's@#en_US.UTF-8@en_US.UTF-8@g' /etc/locale.gen && \
       userdel -r build && \
