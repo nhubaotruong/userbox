@@ -17,13 +17,14 @@ RUN pacman-key --init && \
       pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'  --noconfirm && \
       printf "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
 
-COPY extra-packages /
-# USER build
+COPY extra-packages aur-packages /
 RUN paru -Syu --noconfirm pacutils
 RUN pacinstall --no-confirm --resolve-conflicts=all --dbsync --install $(cat /extra-packages | tr '\n' ' ')
-# USER root
+USER build
+RUN paru -Syu --noconfirm $(cat /aur-packages | tr '\n' ' ')
+USER root
 
-RUN rm /extra-packages
+RUN rm /extra-packages /aur-packages
 
 RUN ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/distrobox && \
