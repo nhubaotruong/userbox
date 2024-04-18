@@ -22,9 +22,7 @@ RUN sed -i 's/#Color/Color/g' /etc/pacman.conf && \
 COPY extra-packages /
 USER build
 
-# RUN apk update && \
-#       apk upgrade && \
-#       grep -v '^#' /extra-packages | xargs apk add
+RUN grep -v '^#' /extra-packages | xargs paru -Syu --noconfirm --noedit
 USER root
 
 RUN rm /extra-packages
