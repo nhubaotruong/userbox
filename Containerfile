@@ -27,7 +27,7 @@ RUN pacman-key --init && \
 
 COPY extra-packages /
 USER build
-
+RUN cat /etc/pacman.conf
 RUN paru -Syu --noconfirm $(cat /extra-packages | tr '\n' ' ')
 USER root
 
