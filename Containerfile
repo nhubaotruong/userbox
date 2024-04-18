@@ -18,10 +18,10 @@ RUN pacman-key --init && \
       printf "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
 
 COPY extra-packages aur-packages /
-RUN paru -Syu --noconfirm pacutils
+RUN pacman -Syu --noconfirm pacutils
 RUN pacinstall --no-confirm --resolve-conflicts=all --dbsync --install $(cat /extra-packages | tr '\n' ' ')
 USER build
-RUN paru -Syu --noconfirm $(cat /aur-packages | tr '\n' ' ')
+RUN paru -Syu --noconfirm --skipreview $(cat /aur-packages | tr '\n' ' ')
 USER root
 
 RUN rm /extra-packages /aur-packages
