@@ -50,8 +50,6 @@ xsel
 go
 rustup
 dbus-glib
-pycharm-community-eap
-intellij-idea-community-edition
 kubectl
 aws-cli-v2
 fastfetch
@@ -64,3 +62,4 @@ android-tools
 postgresql-libs
 tk
 gum
+jetbrains-toolbox
