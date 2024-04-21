@@ -49,9 +49,7 @@ jobs:
           labels: |
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/ublue-os/boxkit/main/README.md
           tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
+            type=schedule,pattern={{date 'YYYYMMDD'}}
             type=sha
             type=raw,value=latest
 
@@ -62,17 +60,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Build image using Buildah action
-      # - name: Build Image
-      #   id: build_image
-      #   uses: redhat-actions/buildah-build@v2
-      #   with:
-      #     containerfiles: |
-      #       ./Containerfile
-      #     image: ${{ env.IMAGE_NAME }}
-      #     tags: ${{ env.IMAGE_TAGS }}
-      #     labels: ${{ steps.meta.outputs.labels }}
-      #     oci: false
       - name: Build
         uses: docker/build-push-action@v5
         with:
@@ -84,14 +71,6 @@ jobs:
           cache-to: type=gha,mode=max
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          
-      # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
-      # https://github.com/macbre/push-to-ghcr/issues/12
-      - name: Lowercase Registry
-        id: registry_case
-        uses: ASzc/change-string-case-action@v6
-        with:
-          string: ${{ env.IMAGE_REGISTRY }}
             
       # Sign container
       - uses: sigstore/cosign-installer@v3.5.0
@@ -99,9 +78,11 @@ jobs:
       - name: Sign container image
         if: github.event_name != 'pull_request'
         run: |
-          cosign sign -y --key env://COSIGN_PRIVATE_KEY ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}@${TAGS}
+          for TAG in ${TAGS}; do
+            cosign sign -y --key env://COSIGN_PRIVATE_KEY ${TAG}
+          done
         env:
-          TAGS: ${{ steps.push.outputs.digest }}
+          TAGS: ${{ steps.meta.outputs.tags }}
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
       
