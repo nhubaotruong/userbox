@@ -61,6 +61,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build
+        id: build_image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -78,11 +79,9 @@ jobs:
       - name: Sign container image
         if: github.event_name != 'pull_request'
         run: |
-          for TAG in ${TAGS}; do
-            cosign sign -y --key env://COSIGN_PRIVATE_KEY ${TAG}
-          done
+          cosign sign -y --key env://COSIGN_PRIVATE_KEY ${DIGEST}
         env:
-          TAGS: ${{ steps.meta.outputs.tags }}
+          DIGEST: ${{ steps.build_image.outputs.digest }}
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
       
