@@ -51,7 +51,6 @@ go
 rustup
 dbus-glib
 kubectl
-aws-cli-v2
 fastfetch
 neofetch
 clang
