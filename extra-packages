@@ -39,7 +39,6 @@ jq
 yq
 zsh-completions
 aria2
-android-studio-canary
 nyancat
 xorg-server-xvfb
 scrcpy
@@ -62,3 +61,4 @@ postgresql-libs
 tk
 gum
 jetbrains-toolbox
+zoxide
