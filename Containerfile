@@ -35,8 +35,6 @@ RUN ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/transactional-update && \
       ln -fs /usr/share/icons/Breeze /usr/share/icons/breeze_cursors
 
-RUN printf 'fs.inotify.max_user_watches=524288\nfs.inotify.max_user_instances=8192' | tee -a /etc/sysctl.d/40-max_user_watches.conf
-
 # Cleanup
 RUN sed -i 's@#en_US.UTF-8@en_US.UTF-8@g' /etc/locale.gen && \
       userdel -r build && \
