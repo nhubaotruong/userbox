@@ -37,6 +37,9 @@ RUN ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
 
 # Cleanup
 RUN sed -i 's@#en_US.UTF-8@en_US.UTF-8@g' /etc/locale.gen && \
+      sed -i 's@#en_GB.UTF-8@en_GB.UTF-8@g' /etc/locale.gen && \
+      locale-gen && \
+      printf "LANG=en_US.UTF-8\nLC_NUMERIC=en_GB.UTF-8\nLC_TIME=en_GB.UTF-8\nLC_MONETARY=en_GB.UTF-8\nLC_PAPER=en_GB.UTF-8\nLC_MEASUREMENT=en_GB.UTF-8" | tee /etc/locale.conf && \
       userdel -r build && \
       rm -drf /home/build && \
       sed -i '/build ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers && \
