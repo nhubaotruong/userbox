@@ -33,6 +33,7 @@ RUN ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/podman-compose && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/transactional-update && \
+      ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/xdg-open && \
       ln -fs /usr/share/icons/Breeze /usr/share/icons/breeze_cursors
 
 # Cleanup
