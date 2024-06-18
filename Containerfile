@@ -21,7 +21,7 @@ COPY extra-packages aur-packages /
 RUN pacman -Syu --noconfirm pacutils
 RUN pacinstall --no-confirm --resolve-conflicts=all --dbsync --install $(cat /extra-packages | tr '\n' ' ')
 USER build
-RUN paru -Syu --noconfirm --skipreview $(cat /aur-packages | tr '\n' ' ')
+RUN paru -Syu --noconfirm --aur --skipreview $(cat /aur-packages | tr '\n' ' ')
 USER root
 
 RUN rm /extra-packages /aur-packages
@@ -48,3 +48,6 @@ RUN sed -i 's@#en_US.UTF-8@en_US.UTF-8@g' /etc/locale.gen && \
       rm -rf \
       /tmp/* \
       /var/cache/pacman/pkg/*
+
+# Hardened malloc
+RUN echo "libhardened_malloc-light.so" >> /etc/ld.so.preload
