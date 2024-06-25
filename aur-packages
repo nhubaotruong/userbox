@@ -3,4 +3,3 @@ aws-cli-v2
 pyenv-virtualenv
 bun-bin
 fnm-bin
-hardened_malloc

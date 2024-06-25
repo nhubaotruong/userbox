@@ -48,6 +48,3 @@ RUN sed -i 's@#en_US.UTF-8@en_US.UTF-8@g' /etc/locale.gen && \
       rm -rf \
       /tmp/* \
       /var/cache/pacman/pkg/*
-
-# Hardened malloc
-RUN echo "libhardened_malloc-light.so" >> /etc/ld.so.preload
