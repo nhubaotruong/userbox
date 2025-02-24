@@ -82,7 +82,7 @@ jobs:
           string: ${{ env.IMAGE_REGISTRY }}
             
       # Sign container
-      - uses: sigstore/cosign-installer@v3.7.0
+      - uses: sigstore/cosign-installer@v3.8.1
 
       - name: Sign container image
         if: github.event_name != 'pull_request'
