@@ -37,7 +37,7 @@ jobs:
 
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         
       # Build metadata
       - name: Image Metadata
